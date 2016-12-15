@@ -13,13 +13,12 @@ PROGRAM mc_nvt
 use parameter_mod
 use potential
 use conf
-use system, only: box, beta
+use system
 IMPLICIT NONE
 
 INTEGER :: equil, prod, nsamp, ii, icycl, ndispl, attempt,  &
     nacc, ncycl, nmoves, imove, kkk
-DOUBLE PRECISION :: en, ent, vir, virt, dr, av1, av2, press, bv1,bv2,x_test,y_test,z_test, ran_uniform, &
-    en_test, vir_test
+DOUBLE PRECISION :: en, ent, vir, virt, dr, av1, av2, press, bv1,bv2
 
 WRITE (6, *) '**************** Mc_Nvt ***************'
 
@@ -90,12 +89,7 @@ DO ii = 1, 2
         DO kkk=1,10
           
 !     Start Modification
-          x_test = ran_uniform()*box
-          y_test = ran_uniform()*box
-          z_test = ran_uniform()*box
           
-          CALL eneri(x_test, y_test, z_test, 0, 1, en_test, vir_test)
-          bv1 = bv1 + Exp(-Beta*en_test)
           bv2 = bv2 + 1.0D0
           
 !     End   Modification
@@ -143,7 +137,7 @@ DO ii = 1, 2
     IF(ii == 2) THEN
       WRITE (6,*) 'Average Pressure                  : ', av1/av2
       WRITE (6,*) 'Chemical Potential                : ',  &
-          -LOG((bv1/bv2)*(box*box*box/DBLE(npart)))/beta
+          -LOG((bv1/bv2)*(box*box*box/ DBLE(npart)))/beta
     END IF
   END IF
 END DO

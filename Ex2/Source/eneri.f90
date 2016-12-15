@@ -14,7 +14,6 @@ SUBROUTINE eneri(xi, yi, zi, i, jb, en, vir)
 use parameter_mod
 use potential
 use conf
-use system, only: box, hbox
 IMPLICIT NONE
 
 DOUBLE PRECISION, INTENT(IN)             :: xi
@@ -47,16 +46,10 @@ DO j = jb, npart
 !cccccccccccccccccccccccccccccccccc
 !     Nearest Image Convention    C
 !cccccccccccccccccccccccccccccccccc
-
+    
 !cccccccccccccccccccccccccccccccccc
 !     Start modification          C
-!cccccccccccccccccccccccccccccccccc    
-    
-    IF (abs(dx) > Box/2) dx = dx - Box*nint(dx/Box)
-   
-   IF (abs(dy) > Box/2) dy = dy - Box*nint(dy/Box)
-   
-   IF (abs(dz) > Box/2) dz = dz - Box*nint(dz/Box)
+!cccccccccccccccccccccccccccccccccc
     
 !cccccccccccccccccccccccccccccccccc
 !     End modification          C

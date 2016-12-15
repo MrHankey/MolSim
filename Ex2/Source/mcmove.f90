@@ -16,7 +16,7 @@ SUBROUTINE mcmove(en, vir, attempt, nacc, dr)
 !     Dr     (Input)        : Maximum Displacement
 use parameter_mod
 use conf
-use system, only: box, beta
+use system
 IMPLICIT NONE
 
 DOUBLE PRECISION, INTENT(OUT)            :: en
@@ -45,16 +45,6 @@ xn = x(o) + (ran_uniform()-0.5D0)*dr
 yn = y(o) + (ran_uniform()-0.5D0)*dr
 zn = z(o) + (ran_uniform()-0.5D0)*dr
 
-!     ---PBC
-
-IF (xn > box) xn = xn - box
-IF (xn < 0) xn = xn + box
-IF (yn > box) yn = yn - box
-IF (yn < 0) yn = yn + box
-IF (zn > box) zn = zn - box
-IF (zn < 0) zn = zn + box
-
-
 !     ---Calculate Energy New Configuration:
 
 CALL eneri(xn, yn, zn, o, jb, enn, virn)
@@ -71,9 +61,7 @@ IF (ran_uniform() < EXP(-beta*(enn-eno))) THEN
   
 !        ---Put Particle In Simulation Box
 !        ---Start modification
-  x(o) = xn 
-  y(o) = yn
-  z(o) = zn
+  
 !        ---End modification
 END IF
 RETURN

@@ -1,0 +1,58 @@
+#! /bin/csh -f
+#
+# Scriptfile
+#
+# rho    = density
+# lmax   = number of steps
+# nequil = number of equilibration steps
+# dr     = maximum displacement
+# npart  = number of particles
+
+# noch eine foreach-Schleife für Temperatur
+
+# Exc. 1
+# Test pressure against ideal gas
+#foreach temp (2.0)
+#foreach rho (0.10 0.25 0.50 0.75 1.00 1.25)
+
+# Exc. 2
+# Test against ideal gas
+#foreach temp (2.0)
+#foreach rho (0.10 0.25 0.50 0.75 1.00 1.25)
+
+# Exc. 2
+# Test lj shift and tail correction
+# foreach temp (1.0)
+# foreach rho (0.40)
+
+# Exc. 3
+# phase equilibrium
+foreach temp (0.8)
+foreach rho (0.10 0.20 0.30 0.40 0.50 0.60 0.70 0.80 0.90 1.00)
+
+
+cat > fort.15  <<endofdata
+  ibeg  nequil  nprod  nsamp  
+     0     10000   10000      1        
+    dr
+  0.09 
+ndispl
+    50  
+ npart    temp    rho
+   100     ${temp}  ${rho} 
+endofdata
+
+cp lj.res      fort.11
+cp lj.model    fort.25
+
+time  ../Source/mc_nvt  > out 
+
+mv fort.21     lj.res
+mv fort.22     movie.pdb
+mv fort.66     lj_phase_${rho}_${temp}.energy
+mv fort.67     lj_phase_${rho}_${temp}.pressure
+rm fort.*
+
+end
+end
+exit

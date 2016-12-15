@@ -1,0 +1,66 @@
+              
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+%\renewcommand{\qedsymbol}{\filledbox}
+
+\title{Excercise 1}%replace X with the appropriate number
+\author{Raphael Leiteritz\\ %replace with your name
+Molecular Simulation} %if necessary, replace with your course title
+
+\maketitle
+
+\section{Task 1}
+
+Given a square with length $l$ and a circle lying within that circle with radius $r = \frac{l}{2}$ we can define the surface ratio $r_s$ as
+\begin{equation}
+	r_s = \frac{\pi r^2}{(2r)^2}
+\end{equation}
+re-arraging terms yields in an expression for
+\begin{equation}
+\qquad	\pi = 4r_s
+\end{equation}
+
+The surface ration $r_s$ can easily be approximated using Monte Carlo methods. First you draw $N$ uniformly distributed random samples within the square. Then the surface ratio is approximated by the quotient of number of samples that lie within the circle $N_{in}$ and the total number of samples generated $N$.
+
+\begin{equation}
+	r_s \approx \frac{N_{in}}{N}
+\end{equation}
+
+Having the diameter of the circle not readily available but rather implicitly defined by the length ratio $rat = \frac{l}{d}$ changes our surface ration equation to
+
+\begin{align*}
+	r_s &= \frac{\pi r^2}{l^2} rat^2 \\
+	\Leftrightarrow \qquad \pi &= 4r_s*
+\end{align*}
+
+\end{document}

@@ -1,0 +1,8 @@
+  ibeg  nequil  nprod  nsamp  
+     0     10000   10000      1        
+    dr
+  0.09 
+ndispl
+    50  
+ npart    temp    rho
+   100     0.8  0.30 

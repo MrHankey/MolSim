@@ -1,0 +1,40 @@
+SUBROUTINE ener(en, vir, r2)
+
+
+!     Calculate Energy Between A (Single) Pair Of Atoms
+
+!     En : (Output) Energy
+!     Vir: (Output) Virial
+!     R2 : (Input) Distance Squared Between Two Particles
+ use potential
+use parameter_mod
+use conf
+ IMPLICIT NONE
+
+  DOUBLE PRECISION, INTENT(OUT)            :: en
+  DOUBLE PRECISION, INTENT(OUT)            :: vir, p_id
+  DOUBLE PRECISION, INTENT(IN)             :: r2
+  DOUBLE PRECISION :: r2i, r6i
+
+
+
+
+  en = 0.0D0
+  vir = 0.0D0
+
+  IF (r2 < rc2) THEN
+    r2i = sig2/r2
+    r6i = r2i*r2i*r2i
+    en  = eps4*(r6i*r6i-r6i)
+    
+  !     Start Modification Virial
+  
+    vir = - eps4*12.0D0*(r6i*r6i - 0.5D0*r6i)
+    p_id = npart * 
+    
+  !     End   Modification Virial
+  
+  END IF
+
+  RETURN
+END SUBROUTINE ener

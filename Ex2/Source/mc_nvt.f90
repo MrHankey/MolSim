@@ -13,12 +13,13 @@ PROGRAM mc_nvt
 use parameter_mod
 use potential
 use conf
-use system
+use system, only: box, beta
 IMPLICIT NONE
 
 INTEGER :: equil, prod, nsamp, ii, icycl, ndispl, attempt,  &
     nacc, ncycl, nmoves, imove, kkk
-DOUBLE PRECISION :: en, ent, vir, virt, dr, av1, av2, press, bv1,bv2
+DOUBLE PRECISION :: en, ent, vir, virt, dr, av1, av2, press, bv1,bv2,x_test,y_test,z_test, ran_uniform, &
+    en_test, vir_test
 
 WRITE (6, *) '**************** Mc_Nvt ***************'
 
@@ -89,7 +90,12 @@ DO ii = 1, 2
         DO kkk=1,10
           
 !     Start Modification
+          x_test = ran_uniform()*box
+          y_test = ran_uniform()*box
+          z_test = ran_uniform()*box
           
+          CALL eneri(x_test, y_test, z_test, 0, 0, en_test, vir_test)
+          bv1 = bv1 + DEXP(-beta*en_test)
           bv2 = bv2 + 1.0D0
           
 !     End   Modification
@@ -138,11 +144,17 @@ DO ii = 1, 2
       WRITE (6,*) 'Average Pressure                  : ', av1/av2
       WRITE (6,*) 'Chemical Potential                : ',  &
           -LOG((bv1/bv2)*(box*box*box/ DBLE(npart)))/beta
+
+      open(unit=72, file="chem_pot.txt", status="old", action="write", position="append")
+      
+      WRITE (72,*) (DBLE(npart)/(box*box*box)), av1/av2, -LOG((bv1/bv2)*(box*box*box/DBLE(npart)))/beta
     END IF
   END IF
 END DO
 CALL store(21, dr)
 STOP
+
+
 
 99001 FORMAT (' Total Energy Initial Configuration: ', f12.5, /,  &
     ' Total Virial Initial Configuration: ', f12.5)

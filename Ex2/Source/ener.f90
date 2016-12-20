@@ -24,8 +24,12 @@ SUBROUTINE ener(en, vir, r2)
     r2i = sig2/r2
     r6i = r2i*r2i*r2i
     en  = eps4*(r6i*r6i-r6i)
+  !    SHIFT LJ to remove discontinuity
+    en = en - eps4*((sig2/rc2)**6 - (sig2/rc2)**3)
     
   !     Start Modification Virial
+  
+    vir = eps48*(r6i*r6i - 0.5D0*r6i)
     
   !     End   Modification Virial
     

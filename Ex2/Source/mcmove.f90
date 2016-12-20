@@ -60,8 +60,18 @@ IF (ran_uniform() < EXP(-beta*(enn-eno))) THEN
   vir = vir + (virn-viro)
   
 !        ---Put Particle In Simulation Box
+  IF (xn < 0) xn = xn + box
+  IF (xn > box) xn = xn - box
+  IF (yn < 0) yn = yn + box
+  IF (yn > box) yn = yn - box
+  IF (zn < 0) zn = zn + box
+  IF (zn > box) zn = zn - box
+
 !        ---Start modification
   
+  x(o) = xn
+  y(o) = yn
+  z(o) = zn
 !        ---End modification
 END IF
 RETURN

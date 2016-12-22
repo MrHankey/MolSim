@@ -94,7 +94,7 @@ DO ii = 1, 2
           y_test = ran_uniform()*box
           z_test = ran_uniform()*box
           
-          CALL eneri(x_test, y_test, z_test, 0, 0, en_test, vir_test)
+          CALL eneri(x_test, y_test, z_test, npart+1, 1, en_test, vir_test)
           bv1 = bv1 + DEXP(-beta*en_test)
           bv2 = bv2 + 1.0D0
           

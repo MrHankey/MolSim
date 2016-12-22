@@ -1,4 +1,5 @@
-FCOMPFLAGS    =	-O3 -ffixed-line-length-none
+#FCOMPFLAGS    =	-O3 -ffixed-line-length-none -ffpe-trap=zero,underflow,denormal
+FCOMPFLAGS    = -g -Wall -Wextra -Warray-temporaries -Wconversion -fimplicit-none -fbacktrace -ffree-line-length-0 -fcheck=all -ffpe-trap=zero -finit-real=nan
 CCOMPFLAGS    =	-O3
 
 FFLAGS        =	$(FCOMPFLAGS)

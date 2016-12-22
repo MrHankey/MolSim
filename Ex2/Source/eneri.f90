@@ -52,23 +52,27 @@ DO j = jb, npart
 !     Start modification          C
 !cccccccccccccccccccccccccccccccccc
 
-    IF (dx > hbox) THEN
-        dx = dx - box
-    ELSE
-        IF (dx < -hbox) dx = dx + box
-    END IF
+     dx = dx - NINT(dx/box)*box
+     dy = dy - NINT(dy/box)*box
+     dz = dz - NINT(dz/box)*box
 
-    IF (dy > hbox) THEN
-        dy = dy - box
-    ELSE
-        IF (dy < -hbox) dy = dy + box
-    END IF
+!    IF (dx > hbox) THEN
+!        dx = dx - box
+!    ELSE
+!        IF (dx < -hbox) dx = dx + box
+!    END IF
+!
+!    IF (dy > hbox) THEN
+!        dy = dy - box
+!    ELSE
+!        IF (dy < -hbox) dy = dy + box
+!    END IF
 
-    IF (dz > hbox) THEN
-        dz = dz - box
-    ELSE
-        IF (dz < -hbox) dz = dz + box
-    END IF
+!    IF (dz > hbox) THEN
+!        dz = dz - box
+!    ELSE
+!        IF (dz < -hbox) dz = dz + box
+!    END IF
     
 !cccccccccccccccccccccccccccccccccc
 !     End modification          C

@@ -2,8 +2,6 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage{fancyhdr}
 \usepackage{fancyheadings}
-\usepackage[ngerman,german]{babel}
-\usepackage{german}
 \usepackage[utf8]{inputenc}
 %\usepackage[latin1]{inputenc}
 \usepackage[active]{srcltx}
@@ -19,6 +17,7 @@
 \usepackage{listings}
 \usepackage{struktex}
 \usepackage{hyperref}
+\usepackage{varioref}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,7 +27,7 @@
 \newcommand{\Seminargruppe}{}
 \newcommand{\Matrikelnummer}{2787596}
 \newcommand{\Semester}{WS 16/17}
-\newcommand{\Uebungsblatt}{1} %  <-- UPDATE ME
+\newcommand{\Uebungsblatt}{3} %  <-- UPDATE ME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -50,11 +49,11 @@
 	}
 }
 %%%%%%%%%%%%%%
-\hypersetup{
-	pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
-	pdfauthor={\Name},
-	pdfborder={0 0 0}
-}
+%\hypersetup{
+%	pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+%	pdfauthor={\Name},
+%	pdfborder={0 0 0}
+%}
 
 \lstset{ %
 	language=java,
@@ -87,54 +86,53 @@
 	
 	\Aufgabe{1}
 	\begin{enumerate}[a)]
-	\item Given a square with length $l$ and a circle lying within that circle with radius $r = \frac{l}{2}$ we can define the surface ratio $r_s$ as
-	\begin{equation}
-		r_s = \frac{\pi r^2}{(2r)^2}
-	\end{equation}
-	re-arraging terms yields in an expression for
-	\begin{equation}
-	\qquad	\pi = 4r_s
-	\end{equation}
+		\item Looking at \vref{fig:chem_pot} the vapor liquid coexistence point lies at a densities $rho = 0.4$ and $\rho_2 = 0.007$. The pressure is $P \approx 0.005313$ and chemical potential $\mu \approx -4.056$.
+		
+		Calculating the chemical potential at high densities is more difficult more difficult than at lower ones because at high densities the term
+		\begin{equation}
+			ln\left(\frac{ \left\langle exp[-\beta \Delta U^{+}] \right\rangle }{\rho}\right)
+		\end{equation}
+		
+		is influencing the overall result more and thus it is more important to estimate the inner term better by investing more computation time.
+		
+		0.0071
+		0.7424
+		
+		\item Performing a simulation in the Gibbs ensemble using the provided code yielded a vapor-liquid coexistence point at around $P = 0.0103$ and $\mu \approx -4.1440$.
+		
+		The coexistence densities are $\rho_1 = 0.0071$ and $\rho_2 = 0.7424$
+		
+		I think it is safe to say that while the chemical potential of both methods almost agrees, the second calculated density certainly does not. This may have multiple causes. First of all the Gibbs simulation did not fully converge. The chemical potentials in both boxes were still $0.1-0.2$ apart from each other. Simply simulating more cycles and more particles may solve this problem.
+		
+		Other than that, the first method may be  
+		
+	\end{enumerate}
 	
-	The surface ration $r_s$ can easily be approximated using Monte Carlo methods. First you draw $N$ uniformly distributed random samples within the square. Then the surface ratio is approximated by the quotient of number of samples that lie within the circle $N_{in}$ and the total number of samples generated $N$.
-	
-	\begin{equation}
-		r_s \approx \frac{N_{in}}{N}
-	\end{equation}
-	
-	\item Having the diameter of the circle not readily available but rather implicitly defined by the length ratio $rat = \frac{l}{d}$ changes our surface ration equation to
-	
-	\begin{align*}
-	    &r_s = \frac{\pi (\frac{l}{2rat})^2}{l^2} \\
-	    \Leftrightarrow \qquad &r_s = \frac{\pi}{4\,rat^2} \\
-		\Leftrightarrow \qquad &\pi = 4\, r_s\, rat^2
-	\end{align*}
-	
-	The optiomal ratio should be $rat = 1$ because this means that the area from which samples are generated is minimal. This in turn means that no computational effort is wasted on generating samples in an outside region that will never contribute to the final result anyway.
-	
-	This can also be
-	The probability of generating a sample inside of the circle equals to the surface ration $r_s$.
-	Given that the distribution of successful hits is binomial this means that 
-	
-	\item The convergence rate of a Monte Carlo estimation is $\frac{1}{\sqrt{n}}$. This means that to achieve an approximation of $\pi$ that is two times more precise you have to invest four times the computation power. For a low dimensional example as it is present here, this is a very slow rate and as such it is not advisable to use this method for calculating many decimals of $\pi$.
-	
-	It is notable however, that Monte Carlo methods are well suited for high dimensional problems because their convergence rate does not depend on the dimension at all.
-    \end{enumerate}
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=\textwidth]{chem_pot.eps}
+		\caption{Chemical potential vs. pressure calculated for different densities.}
+		\label{fig:chem_pot}
+	\end{figure}
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
 
-%              
+
+
+              
 %% --------------------------------------------------------------
 %% This is all preamble stuff that you don't have to worry about.
 %% Head down to where it says "Start here"
 %% --------------------------------------------------------------
 %
-%\documentclass[12pt,paper=a4]{srcbook}
+%\documentclass[12pt]{article}
 %
 %\usepackage[margin=1in]{geometry} 
 %\usepackage{amsmath,amsthm,amssymb}
+%\usepackage{graphicx}
+%\usepackage{varioref}
 %
 %\newcommand{\N}{\mathbb{N}}
 %\newcommand{\Z}{\mathbb{Z}}
@@ -160,34 +158,33 @@
 %
 %%\renewcommand{\qedsymbol}{\filledbox}
 %
-%\title{Excercise 1}%replace X with the appropriate number
+%\title{Excercise 3}%replace X with the appropriate number
 %\author{Raphael Leiteritz\\ %replace with your name
 %Molecular Simulation} %if necessary, replace with your course title
 %
 %\maketitle
 %
 %\section{Task 1}
+%Looking at \vref{fig:chem_pot} the vapor liquid coexistence point lies at a density $\rho^* \approx 0.033$.
 %
-%Given a square with length $l$ and a circle lying within that circle with radius $r = \frac{l}{2}$ we can define the surface ratio $r_s$ as
+%
+%Calculating the chemical potential at high densities is more difficult more difficult than at lower ones because at high densities the term
 %\begin{equation}
-%	r_s = \frac{\pi r^2}{(2r)^2}
-%\end{equation}
-%re-arraging terms yields in an expression for
-%\begin{equation}
-%\qquad	\pi = 4r_s
+%ln\left(\frac{ \left\langle exp[-\beta \Delta U^{+}] \right\rangle }{\rho}\right)
 %\end{equation}
 %
-%The surface ration $r_s$ can easily be approximated using Monte Carlo methods. First you draw $N$ uniformly distributed random samples within the square. Then the surface ratio is approximated by the quotient of number of samples that lie within the circle $N_{in}$ and the total number of samples generated $N$.
+%is influencing the overall result more and thus it is more important to estimate the inner term better by investing more computation time.
 %
-%\begin{equation}
-%	r_s \approx \frac{N_{in}}{N}
-%\end{equation}
+%\begin{figure}[ht]
+%    \label{fig:chem_pot}
+%	\centering
+%  \includegraphics[width=\textwidth]{chem_pot.eps}
+%	\caption{Chemical potential vs. pressure calculated for different densities.}
+%	\label{fig2}
+%\end{figure}
 %
-%Having the diameter of the circle not readily available but rather implicitly defined by the length ratio $rat = \frac{l}{d}$ changes our surface ration equation to
+%\section{Task 2}
 %
-%\begin{align*}
-%	r_s &= \frac{\pi r^2}{l^2} rat^2 \\
-%	\Leftrightarrow \qquad \pi &= 4r_s*
-%\end{align*}
+%Running a Gibbs
 %
 %\end{document}

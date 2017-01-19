@@ -1,12 +1,12 @@
-FCOMPFLAGS    =	-O3 -132
+FCOMPFLAGS    =	-O3
 CCOMPFLAGS    =	-O3
 
 FFLAGS        =	$(FCOMPFLAGS)
 CFLAGS        = $(CCOMPFLAGS)
 LDFLAGS       =	$(FCOMPFLAGS)
 
-LD            = ifort	
-FC            =	ifort
+LD            = gfortran
+FC            =	gfortran
 CC            =	gcc
 
 MAKEFILE      =	Makefile
@@ -22,11 +22,11 @@ SRC	      = parameter.f90 \
 		force.f90       \
 		init.f90        \
 		lattice.f90     \
+		solve.f90       \
 		md.f90          \
 		ranf.f90        \
 		sample.f90      \
 		setvel.f90      \
-		solve.f90       \
 		store.f90       \
 		toterg.f90      \
 		velocs.f90

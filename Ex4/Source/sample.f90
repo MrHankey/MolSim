@@ -48,7 +48,7 @@ IF (switch == 1) THEN
     enp = 0.d0
     press = 0.d0
   END IF
-  WRITE (66, *) is, SNGL(temp), SNGL(press), SNGL(enp)
+  WRITE (66, *) is, SNGL(temp), SNGL(press), SNGL(en), SNGL(enp), SNGL(enk), SNGL(vir)
   IF (MOD(is,igr) == 0) THEN
 !           ---sample radial distribution function
     ngr = ngr + 1

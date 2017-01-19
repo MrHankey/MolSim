@@ -6,6 +6,7 @@ use potential
 use system
 use veloc
 use samp
+use solve_mod, only: solve
 
 IMPLICIT NONE
 
@@ -29,9 +30,9 @@ CALL sample(0, step, en, vir, enk)
 nstep = INT(tmax/delt)
 nstep10 = INT(nstep/10)
 IF (nstep == 0) nstep10 = 0
+CALL force(fx, fy, fz, enpot, vir)
 DO WHILE (time < tmax)
-  CALL force(fx, fy, fz, enpot, vir)
-  CALL solve(fx, fy, fz, enk, delt)
+  CALL solve(fx, fy, fz, enk, delt, enpot, vir)
   time = time + delt
   en = enpot + enk
   step = step + 1

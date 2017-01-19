@@ -22,13 +22,13 @@ for RHO in RHOS:
         f15 = open('fort.15', 'w')
 
         print('ibeg , delt  tmax  tequil nsamp ', file=f15)
-        print('0     0.01  10.0   0.00  1', file=f15)
+        print('0     0.01  10.0   2.00  1', file=f15)
         print('npart temp rho rcp iseed', file=f15)
-        print('108 ' + str(TEMPERATURE) + " " + str(RHO) + " 2.5 123456", file=f15)
+        print('508 ' + str(TEMPERATURE) + " " + str(RHO) + " 2.5 123456", file=f15)
         print('scale   temp     verlet', file=f15)
         print('.true.  ' + str(TEMPERATURE) + '  .true.', file=f15)
         print('iout gr      iout4', file=f15)
-        print('33   500000    36', file=f15)
+        print('33   1    36', file=f15)
 
         f15.close()
 
@@ -38,7 +38,8 @@ for RHO in RHOS:
         shutil.copyfile("lj.res", "fort.11")
         #shutil.copyfile("lj.model", "fort.25")
         out_file = open('out', 'w')
-        subprocess.call(["time", "../Source/MD"], stdout=out_file)
+        #subprocess.call(["time", "../Source/MD"], stdout=out_file)
+        subprocess.call(["../Source/MD"])
         out_file.close()
 
         os.rename("fort.21", "lj.res")
@@ -48,6 +49,7 @@ for RHO in RHOS:
         #map(os.remove, glob.glob("fort.*"))
 
 data1 = np.loadtxt('lj.prt')
+data2 = np.loadtxt('lj.rdf')
 #data2 = np.loadtxt('lj.res')
 
 plt.figure(1)
@@ -59,8 +61,14 @@ plt.plot(data1[:, 0], data1[:, 3], label='en_tot')
 plt.plot(data1[:, 0], data1[:, 4], label='en_pot')
 plt.plot(data1[:, 0], data1[:, 5], label='en_kin')
 plt.plot(data1[:, 0], data1[:, 6], label='vir')
-plt.legend()
+
 plt.xlim([0, len(data1[:,1])])
 
+plt.figure(3)
+plt.plot(data2[:, 0], data2[:, 1], label='g(r)')
+plt.xlim([0, max(data2[:,0])])
+
+
+plt.legend()
 plt.show()
 
